@@ -2,11 +2,23 @@
 
 A simple web app to track marketing campaigns. Built with Next.js for the frontend and FastAPI for the backend.
 
-## What's Inside
+## Project Structure
 
-- **Frontend**: Next.js app with a clean dashboard to view campaigns
-- **Backend**: FastAPI server that serves campaign data
-- **Database**: SQLite for development (can switch to PostgreSQL later)
+```
+grippi-dashboard/
+├── frontend/          # Next.js React application
+├── backend/           # FastAPI Python application  
+├── database/          # SQL scripts and database setup
+├── DEPLOYMENT.md      # Deployment instructions
+└── README.md
+```
+
+## Tech Stack
+
+- **Frontend**: Next.js 14 with TypeScript
+- **Backend**: FastAPI with Python
+- **Database**: SQLite for development (PostgreSQL ready)
+- **Styling**: TailwindCSS
 
 ## Features
 
@@ -18,38 +30,24 @@ A simple web app to track marketing campaigns. Built with Next.js for the fronte
 
 ## Getting Started
 
-### Quick Setup
-
-**For Windows:**
-```bash
-setup.bat
-```
-
-**For Mac/Linux:**
-```bash
-chmod +x setup.sh
-./setup.sh
-```
-
-### Manual Setup
-
-**Backend:**
+### Backend Setup
 ```bash
 cd backend
 pip install fastapi uvicorn
 uvicorn main:app --reload
 ```
 
-**Frontend:**
+### Frontend Setup
 ```bash
 cd frontend
 npm install
 npm run dev
 ```
 
-Then open:
-- Frontend: http://localhost:3000
-- Backend API: http://localhost:8000
+### Access the Application
+- **Frontend**: http://localhost:3000
+- **Backend API**: http://localhost:8000
+- **API Documentation**: http://localhost:8000/docs
 
 ## API Endpoints
 
@@ -57,28 +55,14 @@ Then open:
 - `GET /campaigns?status=Active` - Get only active campaigns
 - `GET /campaigns?status=Paused` - Get only paused campaigns
 
-## Testing
-
-Run the test script to make sure everything works:
-```bash
-python test_api.py
-```
-
 ## Sample Data
 
-The app comes with 10 sample campaigns with Indian festival themes like "Diwali Dhamaka Sale", "Cricket World Cup Promo", etc.
-
-## Tech Stack
-
-- Next.js 14 with TypeScript
-- FastAPI with Python
-- TailwindCSS for styling
-- SQLite database
+The app comes with 10 sample campaigns including "Summer Sale", "Black Friday", "Holiday Special", etc. All costs are displayed in Indian Rupees (₹).
 
 ## Deployment
 
 Ready to deploy on:
-- Vercel (frontend)
-- Railway (backend)
+- **Frontend**: Vercel
+- **Backend**: Railway
 
-Check `DEPLOYMENT.md` for detailed instructions.
+See `DEPLOYMENT.md` for detailed instructions.
