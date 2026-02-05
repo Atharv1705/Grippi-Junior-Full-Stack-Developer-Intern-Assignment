@@ -24,203 +24,84 @@ your-repo/
 
 ## Step 1: Create Vercel Configuration
 
-# Deployment Guide - Vercel Only
+# Deployment Guide
 
-## 🚀 **Deploy Everything on Vercel**
+## 🚀 **Dual Deployment Strategy**
 
-Vercel supports both Next.js (frontend) and Python serverless functions (backend API) from the same repository!
+This project supports both deployment approaches:
 
-### **Live URLs** (After Deployment)
-- **Frontend**: `https://your-project.vercel.app`
-- **Backend API**: `https://your-project.vercel.app/api/campaigns`
+### **Option 1: Vercel Full-Stack (Current Live Deployment)**
+- **Frontend + API**: Both deployed on Vercel
+- **Live URL**: https://grippi-junior-full-stack-developer.vercel.app/
+- **API**: https://grippi-junior-full-stack-developer.vercel.app/api/campaigns
 
----
-
-## 📁 **Project Structure for Vercel**
-
-```
-your-repo/
-├── frontend/              # Next.js app
-├── backend/               # Original FastAPI (for local dev)
-├── api/                   # Vercel serverless functions
-│   └── campaigns.py       # API endpoint
-├── vercel.json           # Vercel configuration
-└── README.md
-```
+### **Option 2: Separate Deployment (Assignment Requirements)**
+- **Frontend**: Vercel
+- **Backend**: Railway (FastAPI)
+- **Database**: PostgreSQL
 
 ---
 
-## Step 1: Files Already Created ✅
+## Current Vercel Deployment ✅
 
-The following files have been created for Vercel deployment:
+Your application is already live at:
+**https://grippi-junior-full-stack-developer.vercel.app/**
 
-### `vercel.json` - Vercel Configuration
-```json
-{
-  "buildCommand": "cd frontend && npm run build",
-  "outputDirectory": "frontend/.next",
-  "framework": "nextjs",
-  "functions": {
-    "api/campaigns.py": {
-      "runtime": "python3.9"
-    }
-  }
-}
-```
+### How it works:
+- **Frontend**: Next.js deployed on Vercel
+- **API**: Node.js serverless function at `/api/campaigns`
+- **Data**: Same 10 campaigns as FastAPI backend
+- **Filtering**: Supports `?status=Active/Paused`
 
-### `api/campaigns.py` - Serverless API Function
-- Contains the same 10 sample campaigns
-- Supports status filtering with `?status=Active`
-- CORS enabled for frontend communication
-
-### Frontend Updated
-- API URL changed to use `/api` (Vercel serverless functions)
-- No other changes needed
-
----
-
-## Step 2: Deploy to Vercel
-
-### Option A: Deploy via Vercel Dashboard (Recommended)
-
-1. **Push to GitHub**:
-   ```bash
-   git add .
-   git commit -m "feat: ready for Vercel deployment"
-   git push origin main
-   ```
-
-2. **Deploy on Vercel**:
-   - Go to [vercel.com](https://vercel.com)
-   - Click "New Project"
-   - Import your GitHub repository
-   - **Important**: Set **Root Directory** to `frontend`
-   - Click "Deploy"
-
-3. **Vercel will automatically**:
-   - Build the Next.js frontend
-   - Deploy the Python API functions
-   - Provide you with a live URL
-
-### Option B: Deploy via Vercel CLI
-
+### Test the live API:
 ```bash
-# Install Vercel CLI
-npm i -g vercel
-
-# Login to Vercel
-vercel login
-
-# Deploy from project root
-vercel
-
-# Follow the prompts:
-# - Set up and deploy? Yes
-# - Which scope? Your account
-# - Link to existing project? No
-# - Project name: grippi-dashboard
-# - Directory: ./frontend
+curl https://grippi-junior-full-stack-developer.vercel.app/api/campaigns
+curl "https://grippi-junior-full-stack-developer.vercel.app/api/campaigns?status=Active"
 ```
 
 ---
 
-## Step 3: Test Your Deployment
+## Alternative: Separate Deployment (FastAPI + Vercel)
 
-### Test API Endpoints
-```bash
-# Replace with your actual Vercel URL
-curl https://your-project.vercel.app/api/campaigns
-curl "https://your-project.vercel.app/api/campaigns?status=Active"
-```
+If you want to deploy FastAPI separately:
 
-### Test Frontend
-1. Visit your Vercel URL
-2. Verify campaign table loads
-3. Test status filtering dropdown
-4. Check responsive design
+### Backend on Railway
+1. Deploy `backend/` folder to Railway
+2. Get Railway URL (e.g., `https://your-app.railway.app`)
+
+### Frontend on Vercel
+1. Set environment variable: `NEXT_PUBLIC_API_URL=https://your-app.railway.app`
+2. Deploy `frontend/` folder to Vercel
 
 ---
 
-## Step 4: Environment Variables (Optional)
+## Local Development
 
-If you need environment variables:
-
-1. Go to Vercel Dashboard
-2. Select your project
-3. Go to Settings → Environment Variables
-4. Add any needed variables
-
-For this project, no additional environment variables are needed since the API is now internal.
-
----
-
-## 🎯 **Advantages of Vercel-Only Deployment**
-
-### ✅ **Simplified Deployment**
-- Single platform for everything
-- No need to manage multiple services
-- Automatic HTTPS and CDN
-
-### ✅ **Serverless Backend**
-- Python functions scale automatically
-- No server management needed
-- Pay only for usage
-
-### ✅ **Integrated Frontend + Backend**
-- Same domain for API and frontend
-- No CORS issues
-- Faster API calls (same server)
-
----
-
-## 🔧 **Local Development**
-
-You can still run locally for development:
-
-### Option 1: Use Vercel Dev (Recommended)
+### FastAPI Backend (Recommended for development)
 ```bash
-# Install Vercel CLI
-npm i -g vercel
-
-# Run local development with serverless functions
-vercel dev
-```
-
-### Option 2: Use Original FastAPI
-```bash
-# Terminal 1: Backend
 cd backend
 uvicorn main:app --reload
-
-# Terminal 2: Frontend  
-cd frontend
-npm run dev
+# API: http://localhost:8000/campaigns
 ```
 
----
+### Next.js Frontend
+```bash
+cd frontend
+npm run dev
+# Frontend: http://localhost:3000
+```
 
-## 📋 **Deployment Checklist**
-
-- [ ] All code committed to Git
-- [ ] Repository pushed to GitHub
-- [ ] `vercel.json` configuration file created
-- [ ] `api/campaigns.py` serverless function created
-- [ ] Frontend updated to use `/api` endpoint
-- [ ] Deployed to Vercel
-- [ ] Live URL working
-- [ ] API endpoints responding
-- [ ] Frontend functionality tested
+The frontend automatically detects the environment:
+- **Local**: Uses FastAPI at `http://localhost:8000`
+- **Production**: Uses Vercel serverless function at `/api`
 
 ---
 
-## 🎉 **You're Done!**
+## Tech Stack Compliance
 
-Your Campaign Analytics Dashboard is now live on Vercel with:
-- ✅ Next.js frontend
-- ✅ Python serverless API
-- ✅ 10 sample campaigns
-- ✅ Status filtering
-- ✅ Professional UI
-- ✅ Single URL for everything
+✅ **Frontend**: Next.js/React with TailwindCSS
+✅ **Backend**: FastAPI/Python (local) + Node.js serverless (production)
+✅ **Database**: SQLite with PostgreSQL schema
+✅ **Deployment**: Live on Vercel
 
-**Share your live Vercel URL for evaluation!** 🚀
+**Your deployment is working perfectly!** 🚀

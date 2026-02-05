@@ -19,7 +19,7 @@ export default function handler(req, res) {
   // Get status filter from query parameters
   const { status } = req.query;
   
-  // Sample campaign data
+  // Sample campaign data - same as FastAPI backend
   const campaignsData = [
     {"id": 1, "name": "Summer Sale", "status": "Active", "clicks": 150, "cost": 3799.25, "impressions": 1000},
     {"id": 2, "name": "Black Friday", "status": "Paused", "clicks": 320, "cost": 7399.50, "impressions": 2500},
